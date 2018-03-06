@@ -87,10 +87,10 @@ for (var i = 0; i < 10; i++) {
 }
 
 
-csp.run(offs, stus, function() {
-	console.log("CSP finished.");
-	two_opt.run(offs, stus, function() {
-		console.log("2-opt finished.");
-		console.log(stus);
-	});
-});
+// csp.run(offs, stus, function() {
+// 	console.log("CSP finished.");
+// 	two_opt.run(offs, stus, function() {
+// 		console.log("2-opt finished.");
+// 		console.log(stus);
+// 	});
+// });
