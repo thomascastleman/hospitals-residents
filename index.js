@@ -86,11 +86,20 @@ for (var i = 0; i < 10; i++) {
 	offs.push(castleman.initHospital(i, 3, new Offering(10, 17)));
 }
 
+castleman.findMatching(offs, stus);
 
-// csp.run(offs, stus, function() {
-// 	console.log("CSP finished.");
-// 	two_opt.run(offs, stus, function() {
-// 		console.log("2-opt finished.");
-// 		console.log(stus);
-// 	});
-// });
+for (var h = 0 ; h < offs.length; h++) {
+	var hosp = offs[h];
+	console.log("Hospital: ");
+	console.log(hosp);
+
+	console.log("Residents:");
+	for (var r = 0; r < stus.length; r++) {
+		var res = stus[r];
+		if (res.hospital_id == hosp.id) {
+			console.log(res);
+		}
+	}
+
+	console.log();
+}

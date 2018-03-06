@@ -80,23 +80,3 @@ function removeGhostResidents(hospitals, residents) {
 module.exports = {
 	run: two_opt
 };
-
-
-
-
-
-var res = [];
-
-for (var i = 0; i < 10; i++) {
-	res.push({ghost: undefined, hospital_id: i });
-}
-
-var hosp = [];
-
-for (var i = 0; i < 10; i++) {
-	hosp.push({id: i, num_residents: 1, max_capacity: 2});
-}
-
-addGhostResidents(hosp, res);
-
-console.log(res);
