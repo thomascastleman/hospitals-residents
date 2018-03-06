@@ -1,7 +1,36 @@
 
 
 function two_opt(hospitals, residents, callback) {
+	addGhostResidents(hospitals, residents);
+	var temperature = 100.0;
+	var rate = 0.9999;
 
+	while (temperature > 0.00001) {
+		var ind = getRandomIndices(residents.length);
+
+		// get random pairs
+		var resA = residents[ind.index1];
+		var hospA = hospitals[resA.hospital_id];
+
+		var resB = residents[ind.index2];
+		var hospB = hospitals[resB.hospital_id];
+
+		// if swap legal
+		if (global.finalCheckLegality(hospA, resB) && global.finalCheckLegality(hospB, resA)) {
+			// calculate costs
+			var prevCost = global.finalSoftCost(hospA, resA) + global.finalSoftCost(hospB, resB);
+			var swapCost = global.finalSoftCost(hospA, resB) + global.finalSoftCost(hospB, resA);
+			
+			// if swap better, execute
+			if (swapCost < prevCost || Math.random() * 100 < temperature) {
+				resA.hospital_id = hospB.id;
+				resB.hospital_id = hospA.id;
+			}
+			// decrease temperature
+			temperature *= rate;
+		}
+	}
+	removeGhostResidents(hospitals, residents);
 	callback();
 }
 
@@ -43,9 +72,31 @@ function removeGhostResidents(hospitals, residents) {
 			hospitals[residents[i].hospital_id].num_residents--;
 		}
 	}
-	residents = newRes;
+	residents.splice(0, residents.length);
+	residents.push.apply(residents, newRes);
+
 } 
 
 module.exports = {
 	run: two_opt
 };
+
+
+
+
+
+var res = [];
+
+for (var i = 0; i < 10; i++) {
+	res.push({ghost: undefined, hospital_id: i });
+}
+
+var hosp = [];
+
+for (var i = 0; i < 10; i++) {
+	hosp.push({id: i, num_residents: 1, max_capacity: 2});
+}
+
+addGhostResidents(hosp, res);
+
+console.log(res);
