@@ -38,7 +38,13 @@ global.finalSoftCost = function(hosp, res) {
 	return res.ghost ? 0 : exports.softCost(hosp, res);
 }
 
-
+exports.findMatching = function(hospitals, residents) {
+	csp.run(hospitals, residents, function() {
+		two_opt.run(hospitals, residents, function() {
+			console.log("Matching found.");
+		});
+	});
+};
 
 
 // ----------------------------- client: ish
@@ -79,3 +85,12 @@ for (var i = 0; i < 30; i++) {
 for (var i = 0; i < 10; i++) {
 	offs.push(castleman.initHospital(i, 3, new Offering(10, 17)));
 }
+
+
+csp.run(offs, stus, function() {
+	console.log("CSP finished.");
+	two_opt.run(offs, stus, function() {
+		console.log("2-opt finished.");
+		console.log(stus);
+	});
+});
