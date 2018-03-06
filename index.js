@@ -2,6 +2,9 @@
 var two_opt = require('./two-opt.js');
 var csp = require('./csp.js');
 
+global.checkLegality = undefined;
+global.softCost = undefined;
+
 // add properties to an instance of the client-defined "hospital" class
 exports.initHospital = function(_id, _max_capacity, object) {
 	return Object.assign({
@@ -19,30 +22,36 @@ exports.initResident = function(_id, object) {
 	}, object);
 }
 
-// legality function specific to client implementation
-exports.checkLegality = function(hosp, res) {
-	return undefined;
-};
+// allow user to pass in own soft cost definition
+exports.softCost = function() { return undefined; };
 
-// soft cost specific to client implementation
-exports.softCost = function(hosp, res) {
-	return undefined;
-};
+// allow user to pass in legality definition
+exports.checkLegality = function() { return undefined; };
 
 // check both absolute legality and client-defined legality
-function checkFinalLegality(hosp, res) {
+global.finalCheckLegality = function(hosp, res) {
 	return res.ghost || exports.checkLegality(hosp, res);
 }
 
 // check absolute soft cost (ghost = 0) and client-defined
-function finalSoftCost(hosp, res) {
+global.finalSoftCost = function(hosp, res) {
 	return res.ghost ? 0 : exports.softCost(hosp, res);
 }
 
 
-// client: ----------------------------------------------------
+
+
+// ----------------------------- client: ish
 
 var castleman = exports;
+
+castleman.checkLegality = function() {
+	return true;
+}
+
+castleman.softCost = function() {
+	return 0.0;
+}
 
 
 // client defined offering (hosp) class
@@ -58,16 +67,15 @@ function Student(grade, age, rank) {
 	this.rank = rank;
 }
 
-var offering = castleman.initHospital(0, 25, new Offering(10, 17));
-console.log(offering);
 
-var student1 = castleman.initResident(0, new Student(11, 17, [0, 1, 2, 3, 4]));
-console.log(student1);
+var stus = [];
+var offs = [];
+
+for (var i = 0; i < 30; i++) {
+	stus.push(castleman.initResident(i, new Student(11, 17, [0, 1, 2])));
+}
 
 
-// legality defined in terms of my specific problem:
-castleman.checkLegality = function(offering, student) {
-	return student.grade >= offering.grade && student.age >= offering.age;
-};
-
-console.log(castleman.checkLegality(offering, student1));
+for (var i = 0; i < 10; i++) {
+	offs.push(castleman.initHospital(i, 3, new Offering(10, 17)));
+}
