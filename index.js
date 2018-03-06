@@ -35,11 +35,11 @@ global.finalSoftCost = function(hosp, res) {
 	return res.ghost ? 0 : exports.softCost(hosp, res);
 }
 
-exports.findMatching = function(hospitals, residents) {
+exports.findMatching = function(hospitals, residents, callback) {
 	global.checkFuncDefinitions();
 	csp.run(hospitals, residents, function() {
 		two_opt.run(hospitals, residents, function() {
-			console.log("Matching found.");
+			callback();
 		});
 	});
 };
@@ -89,20 +89,20 @@ for (var i = 0; i < 10; i++) {
 	offs.push(castleman.initHospital(i, 3, new Offering(10, 17)));
 }
 
-castleman.findMatching(offs, stus);
+castleman.findMatching(offs, stus, function() {
+	for (var h = 0 ; h < offs.length; h++) {
+		var hosp = offs[h];
+		console.log("Hospital: ");
+		console.log(hosp);
 
-for (var h = 0 ; h < offs.length; h++) {
-	var hosp = offs[h];
-	console.log("Hospital: ");
-	console.log(hosp);
-
-	console.log("Residents:");
-	for (var r = 0; r < stus.length; r++) {
-		var res = stus[r];
-		if (res.hospital_id == hosp.id) {
-			console.log(res);
+		console.log("Residents:");
+		for (var r = 0; r < stus.length; r++) {
+			var res = stus[r];
+			if (res.hospital_id == hosp.id) {
+				console.log(res);
+			}
 		}
-	}
 
-	console.log();
-}
+		console.log();
+	}
+});
