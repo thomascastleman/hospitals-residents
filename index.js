@@ -31,7 +31,7 @@ exports.softCost = function(hosp, res) {
 
 // check both absolute legality and client-defined legality
 function checkFinalLegality(hosp, res) {
-	return res.ghost || (hospital.num_subscribed <= hospital.max_capacity && exports.checkLegality(hosp, res));
+	return res.ghost || exports.checkLegality(hosp, res);
 }
 
 // check absolute soft cost (ghost = 0) and client-defined
