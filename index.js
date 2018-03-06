@@ -2,9 +2,6 @@
 var two_opt = require('./two-opt.js');
 var csp = require('./csp.js');
 
-global.checkLegality = undefined;
-global.softCost = undefined;
-
 // add properties to an instance of the client-defined "hospital" class
 exports.initHospital = function(_id, _max_capacity, object) {
 	return Object.assign({
@@ -39,6 +36,7 @@ global.finalSoftCost = function(hosp, res) {
 }
 
 exports.findMatching = function(hospitals, residents) {
+	global.checkFuncDefinitions();
 	csp.run(hospitals, residents, function() {
 		two_opt.run(hospitals, residents, function() {
 			console.log("Matching found.");
@@ -46,19 +44,25 @@ exports.findMatching = function(hospitals, residents) {
 	});
 };
 
+// ensure all client-defined functions are filled out
+global.checkFuncDefinitions = function() {
+	if (exports.checkLegality() == undefined || exports.softCost() == undefined) {
+		throw "checkLegality(h, r) or softCost(h, r)  is undefined!";
+	}
+}
+
 
 // ----------------------------- client: ish
 
 var castleman = exports;
 
-castleman.checkLegality = function() {
+castleman.checkLegality = function(h, r) {
 	return true;
 }
 
-castleman.softCost = function() {
+castleman.softCost = function(h, r) {
 	return 0.0;
 }
-
 
 // client defined offering (hosp) class
 function Offering(grade, age) {
@@ -72,7 +76,6 @@ function Student(grade, age, rank) {
 	this.age = age;
 	this.rank = rank;
 }
-
 
 var stus = [];
 var offs = [];
