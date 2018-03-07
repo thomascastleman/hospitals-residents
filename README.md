@@ -76,4 +76,5 @@ And finally, to calculate a matching solution, call `findMatching`.
 ```javascript
 hr.findMatching( [ array of hospitals ], [ array of residents ], callback );
 ```
-The algorithm will operate on the objects themselves and will assign each resident-entity a pair id under the property `hospital_id`.
+<br>The algorithm will operate on the objects themselves and will assign each resident-entity a pair id under the property `hospital_id`.<br>
+At any point in the matching, an array ID's of all resident-entities assigned to any given hospital-entity will be maintained under its `resident_ids` attribute.
