@@ -15,7 +15,7 @@ npm install hospitals-and-residents --save
 
 ## Usage
 
-Initially, make sure to include the module in your entry point file:
+Initially, make sure to include the module at some point:
 ```javascript
 var hr = require('hospitals-and-residents');
 ```
