@@ -4,7 +4,7 @@ var csp = require('./csp.js');
 
 // find matching using an initial matching and 2-opt optimization
 exports.findMatching = function(hospitals, residents, callback) {
-	global.checkFuncDefinitions();
+	checkFuncDefinitions();
 	csp.run(hospitals, residents, function() {
 		two_opt.run(hospitals, residents, function() {
 			callback();
@@ -17,7 +17,8 @@ exports.initHospital = function(_id, _max_capacity, object) {
 	return Object.assign({
 		id: _id,
 		max_capacity: _max_capacity,
-		num_subscribed: 0
+		num_subscribed: 0,
+		resident_ids: []
 	}, object);
 }
 
@@ -46,7 +47,7 @@ global.finalSoftCost = function(hosp, res) {
 }
 
 // ensure all client-defined functions are filled out
-global.checkFuncDefinitions = function() {
+function checkFuncDefinitions() {
 	if (exports.checkLegality == undefined || exports.softCost == undefined) {
 		throw "checkLegality(h, r) or softCost(h, r)  is undefined!";
 	}

@@ -12,13 +12,17 @@ function backtracking(index, hospitals, residents) {
 			if (global.finalCheckLegality(hosp, res) && hosp.num_subscribed < hosp.max_capacity) {
 				// assign resident
 				res.hospital_id = hosp.id;
+				hosp.resident_ids.push(res.id);
 				hosp.num_subscribed++;
 
 				// if rest of solution valid, allow
 				if (backtracking(index + 1, hospitals, residents)) {
 					return true;
 				} else {
+					// remove assignment
 					hosp.num_subscribed--;
+					hosp.resident_ids.splice(hosp.resident_ids.indexOf(res.id), 1);
+
 				}
 			}
 		}

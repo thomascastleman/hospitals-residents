@@ -23,6 +23,14 @@ function two_opt(hospitals, residents, callback) {
 			
 			// if swap better, execute
 			if (swapCost < prevCost || Math.random() * 100 < temperature) {
+				// remove previous pairs' id's
+				hospB.resident_ids.splice(hospB.resident_ids.indexOf(resB.id), 1);
+				hospA.resident_ids.splice(hospA.resident_ids.indexOf(resA.id), 1);
+
+				// maintain new pairing id's
+				hospB.resident_ids.push(resA.id);
+				hospA.resident_ids.push(resB.id);
+
 				resA.hospital_id = hospB.id;
 				resB.hospital_id = hospA.id;
 			}
