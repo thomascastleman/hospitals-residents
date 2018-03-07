@@ -1,10 +1,14 @@
 {
-  "name": "hospitals-residents",
+  "name": "hospitals-and-residents",
   "version": "1.0.0",
   "description": "A generalized solution for working with matching problems similar to the hospitals and residents.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type":"git",
+    "url": "git+https://github.com/thomascastleman/hospitals-residents.git"
   },
   "keywords": [
     "matching",

@@ -1,5 +1,5 @@
 
-
+// solve a subproblem of the initial matching recursively
 function backtracking(index, hospitals, residents) {
 	if (index < residents.length) {
 		var res = residents[index];
@@ -10,6 +10,7 @@ function backtracking(index, hospitals, residents) {
 
 			// if match found locally 
 			if (global.finalCheckLegality(hosp, res) && hosp.num_subscribed < hosp.max_capacity) {
+				// assign resident
 				res.hospital_id = hosp.id;
 				hosp.num_subscribed++;
 
@@ -29,6 +30,7 @@ function backtracking(index, hospitals, residents) {
 	}
 }
 
+// get initial acceptable matching using recursive backtracking
 function runBacktracking(hospitals, residents, callback) {
 	backtracking(0, hospitals, residents);
 	callback();

@@ -1,5 +1,5 @@
 
-
+// optimize matching for a soft cost
 function two_opt(hospitals, residents, callback) {
 	addGhostResidents(hospitals, residents);
 	var temperature = 100.0;
@@ -26,9 +26,10 @@ function two_opt(hospitals, residents, callback) {
 				resA.hospital_id = hospB.id;
 				resB.hospital_id = hospA.id;
 			}
-			// decrease temperature
-			temperature *= rate;
 		}
+
+		// decrease temperature
+		temperature *= rate;
 	}
 	removeGhostResidents(hospitals, residents);
 	callback();
@@ -47,7 +48,7 @@ function getRandomIndices(num_residents) {
 	return { index1: rand1, index2: rand2 };
 }
 
-// add necessary ghosts to meet every hospitals capacity
+// add necessary ghosts to meet every hospital's capacity
 function addGhostResidents(hospitals, residents) {
 	for (var i = 0; i < hospitals.length; i++) {
 		var hosp = hospitals[i];
@@ -74,7 +75,6 @@ function removeGhostResidents(hospitals, residents) {
 	}
 	residents.splice(0, residents.length);
 	residents.push.apply(residents, newRes);
-
 } 
 
 module.exports = {
