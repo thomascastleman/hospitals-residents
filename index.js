@@ -47,7 +47,7 @@ global.finalSoftCost = function(hosp, res) {
 
 // ensure all client-defined functions are filled out
 global.checkFuncDefinitions = function() {
-	if (exports.checkLegality() == undefined || exports.softCost() == undefined) {
+	if (exports.checkLegality == undefined || exports.softCost == undefined) {
 		throw "checkLegality(h, r) or softCost(h, r)  is undefined!";
 	}
 }
