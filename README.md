@@ -1,5 +1,7 @@
 # hospitals-residents
 
+www.npmjs.com/package/hospitals-and-residents
+
 A generalized solution for working with matchings problems similar to the Hospitals & Residents problem. <br><br>
 This problem operates on two types of entities, the defining characteristics of which are the following:
 - Resident-type
