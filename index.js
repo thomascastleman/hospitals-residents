@@ -23,10 +23,11 @@ exports.initHospital = function(_id, _max_capacity, object) {
 }
 
 // add necessary properties to an instance of the client-defined "resident" class
-exports.initResident = function(_id, object) {
+exports.initResident = function(_id, _capacity_value, object) {
 	return Object.assign({
 		id: _id,
-		hospital_id: undefined
+		hospital_id: undefined,
+		capacity_value: _capacity_value
 	}, object);
 }
 

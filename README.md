@@ -67,14 +67,19 @@ var hospital1 = hr.initHospital(0, 40, new Hospital([15, 2, 7], 5));
 ```
 or for resident-entities:
 ```javascript
-// initResident( <ID>, <CUSTOM OBJECT> );
-var resident1 = hr.initResident(24, new Resident([3, 18, 36], 7));
+// initResident( <ID>, <CAPACITY VALUE>, <CUSTOM OBJECT> );
+var resident1 = hr.initResident(24, 1, new Resident([3, 18, 36], 7));
 ```
+
+In the case of the resident, the capacity value designates the number of capacity "units" this resident should represent. For instance, a single resident with capacity value 3 cannot be assigned to a hospital with only 2 remaining seats. This is considered a capacity violation. This functionality is useful for situations where resident entities themselves represent groups rather than single entities.
 
 #### Matching
 And finally, to calculate a matching solution, call `findMatching`. 
 ```javascript
 hr.findMatching( [ array of hospitals ], [ array of residents ], callback );
 ```
-<br>The algorithm will operate on the objects themselves and will assign each resident-entity a pair id under the property `hospital_id`.<br>
-At any point in the matching, an array ID's of all resident-entities assigned to any given hospital-entity will be maintained under its `resident_ids` attribute.
+<br>
+
+##### To Note:
+- The algorithm will operate on the objects themselves and will assign each resident-entity a pair id under the property `hospital_id`.
+- At any point in the matching, an array ID's of all resident-entities assigned to any given hospital-entity will be maintained under its `resident_ids` attribute.
