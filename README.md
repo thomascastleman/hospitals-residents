@@ -60,17 +60,17 @@ hr.softCost = function(hosp, res) {
 ```
 
 #### Instantiation
-In order to instantiate objects to pass to the matching algorithm, they must first be modified in order to ensure they have certain basic properties. For instance, both entities must have ID's, and each hospital-entity must have a maximum capacity. <br><br>
+In order to instantiate objects to pass to the matching algorithm, they must first be modified in order to ensure they have certain basic properties. Each hospital-entity must have a maximum capacity, and each resident-entity must have a capacity value. <br><br>
 To handle this modification, objects should be processed through the module's `init` functions while being instantiated.<br>
 i.e.
 ```javascript
-// initHospital( <ID>, <MAX CAPACITY>, <CUSTOM OBJECT> );
-var hospital1 = hr.initHospital(0, 40, new Hospital([15, 2, 7], 5));
+// initHospital( <MAX CAPACITY>, <CUSTOM OBJECT> );
+var hospital1 = hr.initHospital(40, new Hospital([15, 2, 7], 5));
 ```
 or for resident-entities:
 ```javascript
-// initResident( <ID>, <CAPACITY VALUE>, <CUSTOM OBJECT> );
-var resident1 = hr.initResident(24, 1, new Resident([3, 18, 36], 7));
+// initResident( <CAPACITY VALUE>, <CUSTOM OBJECT> );
+var resident1 = hr.initResident(1, new Resident([3, 18, 36], 7));
 ```
 
 In the case of the resident, the capacity value designates the number of capacity "units" this resident should represent. For instance, a single resident with capacity value 3 cannot be assigned to a hospital with only 2 remaining seats. This is considered a capacity violation. This functionality is useful for situations where resident entities themselves represent groups rather than single entities.
