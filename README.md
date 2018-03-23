@@ -1,5 +1,7 @@
 # hospitals-residents
 
+www.npmjs.com/package/hospitals-and-residents
+
 A generalized solution for working with matchings problems similar to the Hospitals & Residents problem. <br><br>
 This problem operates on two types of entities, the defining characteristics of which are the following:
 - Resident-type
@@ -78,7 +80,6 @@ And finally, to calculate a matching solution, call `findMatching`.
 ```javascript
 hr.findMatching( [ array of hospitals ], [ array of residents ], callback );
 ```
-<br>
 
 ##### To Note:
 - The algorithm will operate on the objects themselves and will assign each resident-entity a pair id under the property `hospital_id`.
