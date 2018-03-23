@@ -1,6 +1,6 @@
 {
   "name": "hospitals-and-residents",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A generalized solution for working with matching problems similar to the hospitals and residents.",
   "main": "index.js",
   "scripts": {
