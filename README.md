@@ -83,6 +83,8 @@ hr.findMatching( [ array of hospitals ], [ array of residents ], function(error)
 });
 ```
 
+An error will be thrown if the total capacity of all hospitals cannot hold the total capacity of all residents, or if the backtracking algorithm finds no acceptable solution.
+
 ##### To Note:
 - The algorithm will operate on the objects themselves and will assign each resident-entity a pair id under the property `assigned_id`.
 - At any point in the matching, an array ID's of all resident-entities assigned to any given hospital-entity will be maintained under its `assigned_ids` attribute.
