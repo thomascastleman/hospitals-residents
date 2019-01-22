@@ -43,10 +43,10 @@ function singleResidentTwoOpt(hospitals, residents, callback) {
 
 		// get random pairs
 		var resA = residents[ind.index1];
-		var hospA = hospitals[resA.hospital_id];
+		var hospA = hospitals[resA.assigned_id];
 
 		var resB = residents[ind.index2];
-		var hospB = hospitals[resB.hospital_id];
+		var hospB = hospitals[resB.assigned_id];
 
 		// if swap legal
 		if (global.finalCheckLegality(hospA, resB) && global.finalCheckLegality(hospB, resA)) {
@@ -57,15 +57,15 @@ function singleResidentTwoOpt(hospitals, residents, callback) {
 			// if swap better, execute
 			if (swapCost < prevCost || Math.random() * 100 < temperature) {
 				// remove previous pairs' id's
-				hospB.resident_ids.splice(hospB.resident_ids.indexOf(resB.id), 1);
-				hospA.resident_ids.splice(hospA.resident_ids.indexOf(resA.id), 1);
+				hospB.assigned_ids.splice(hospB.assigned_ids.indexOf(resB.id), 1);
+				hospA.assigned_ids.splice(hospA.assigned_ids.indexOf(resA.id), 1);
 
 				// maintain new pairing id's
-				hospB.resident_ids.push(resA.id);
-				hospA.resident_ids.push(resB.id);
+				hospB.assigned_ids.push(resA.id);
+				hospA.assigned_ids.push(resB.id);
 
-				resA.hospital_id = hospB.id;
-				resB.hospital_id = hospA.id;
+				resA.assigned_id = hospB.id;
+				resB.assigned_id = hospA.id;
 			}
 		}
 
@@ -83,7 +83,7 @@ function addSingleGhosts(hospitals, residents) {
 
 		// while capacity not met, fill with ghosts
 		while (hosp.num_residents < hosp.max_capacity) {
-			residents.push({ ghost: true, hospital_id: hosp.id });
+			residents.push({ ghost: true, assigned_id: hosp.id });
 			hosp.num_residents++;
 		}
 	}
@@ -98,7 +98,7 @@ function removeSingleGhosts(hospitals, residents) {
 			newRes.push(residents[i]);
 		} else {
 			// remove ghost
-			hospitals[residents[i].hospital_id].num_residents--;
+			hospitals[residents[i].assigned_id].num_residents--;
 		}
 	}
 	residents.splice(0, residents.length);
@@ -118,10 +118,10 @@ function groupedResidentTwoOpt(hospitals, residents, callback) {
 
 		// get random pairs
 		var resA = residents[ind.index1];
-		var hospA = hospitals[resA.hospital_id];
+		var hospA = hospitals[resA.assigned_id];
 
 		var resB = residents[ind.index2];
-		var hospB = hospitals[resB.hospital_id];
+		var hospB = hospitals[resB.assigned_id];
 
 		// if swap legal
 		if (global.finalCheckLegality(hospA, resB) && global.finalCheckLegality(hospB, resA)) {
@@ -141,17 +141,17 @@ function groupedResidentTwoOpt(hospitals, residents, callback) {
 
 						// remove previous pairs' id's
 						if (!resB.ghost) {
-							hospB.resident_ids.splice(hospB.resident_ids.indexOf(resB.id), 1);
-							hospA.resident_ids.push(resB.id);
-							resB.hospital_id = hospA.id;
+							hospB.assigned_ids.splice(hospB.assigned_ids.indexOf(resB.id), 1);
+							hospA.assigned_ids.push(resB.id);
+							resB.assigned_id = hospA.id;
 						} else {
 							ghost = resB;
 						}
 
 						if (!resA.ghost) {
-							hospA.resident_ids.splice(hospA.resident_ids.indexOf(resA.id), 1);
-							hospB.resident_ids.push(resA.id);
-							resA.hospital_id = hospB.id;
+							hospA.assigned_ids.splice(hospA.assigned_ids.indexOf(resA.id), 1);
+							hospB.assigned_ids.push(resA.id);
+							resA.assigned_id = hospB.id;
 						} else {
 							ghost = resA;
 						}
@@ -186,7 +186,7 @@ function addGroupedGhosts(hospitals, residents) {
 
 		var ghost = {
 			ghost: true,
-			hospital_id: hosp.id,
+			assigned_id: hosp.id,
 			capacity_value: hosp.max_capacity - hosp.num_subscribed,
 		}
 

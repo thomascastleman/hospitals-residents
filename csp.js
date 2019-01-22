@@ -11,8 +11,8 @@ function backtracking(index, hospitals, residents) {
 			// if legal and hospital can handle addition of resident with this cap value
 			if (global.finalCheckLegality(hosp, res) && hosp.num_subscribed + res.capacity_value <= hosp.max_capacity) {
 				// assign resident
-				res.hospital_id = hosp.id;
-				hosp.resident_ids.push(res.id);
+				res.assigned_id = hosp.id;
+				hosp.assigned_ids.push(res.id);
 				hosp.num_subscribed += res.capacity_value;
 
 				// if rest of solution valid, allow
@@ -21,7 +21,7 @@ function backtracking(index, hospitals, residents) {
 				} else {
 					// remove assignment
 					hosp.num_subscribed -= res.capacity_value;
-					hosp.resident_ids.splice(hosp.resident_ids.indexOf(res.id), 1);
+					hosp.assigned_ids.splice(hosp.assigned_ids.indexOf(res.id), 1);
 				}
 			}
 		}
@@ -35,8 +35,7 @@ function backtracking(index, hospitals, residents) {
 
 // get initial acceptable matching using recursive backtracking
 function runBacktracking(hospitals, residents, callback) {
-	backtracking(0, hospitals, residents);
-	callback();
+	callback(backtracking(0, hospitals, residents));
 }
 
 module.exports = {
