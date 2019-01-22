@@ -35,7 +35,7 @@ function backtracking(index, hospitals, residents) {
 
 // get initial acceptable matching using recursive backtracking
 function runBacktracking(hospitals, residents, callback) {
-	callback(backtracking(0, hospitals, residents));
+	callback(!backtracking(0, hospitals, residents));
 }
 
 module.exports = {
