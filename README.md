@@ -78,9 +78,11 @@ In the case of the resident, the capacity value designates the number of capacit
 #### Matching
 And finally, to calculate a matching solution, call `findMatching`. 
 ```javascript
-hr.findMatching( [ array of hospitals ], [ array of residents ], callback );
+hr.findMatching( [ array of hospitals ], [ array of residents ], function(error) {
+	// handle error here
+});
 ```
 
 ##### To Note:
-- The algorithm will operate on the objects themselves and will assign each resident-entity a pair id under the property `hospital_id`.
-- At any point in the matching, an array ID's of all resident-entities assigned to any given hospital-entity will be maintained under its `resident_ids` attribute.
+- The algorithm will operate on the objects themselves and will assign each resident-entity a pair id under the property `assigned_id`.
+- At any point in the matching, an array ID's of all resident-entities assigned to any given hospital-entity will be maintained under its `assigned_ids` attribute.
