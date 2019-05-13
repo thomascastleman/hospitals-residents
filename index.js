@@ -2,6 +2,13 @@
 var two_opt = require('./two-opt.js');
 var csp = require('./csp.js');
 
+// export 2-opt parameters
+exports.settings = global.settings = {
+	rate: 0.9999,
+	threshold: 0.00001,
+	logging: false
+}
+
 // find matching using an initial matching and 2-opt optimization
 exports.findMatching = function(hospitals, residents, callback) {
 	// ensure necessary function definitions have been filled out by package user
@@ -17,12 +24,16 @@ exports.findMatching = function(hospitals, residents, callback) {
 		addIDs(hospitals, residents);
 
 		// try to generate initial random matching (pass err if no solution found)
+		if (global.settings.logging) process.stdout.write("[hospitals-and-residents] Generating initial satisfactory matching... ");
 		csp.run(hospitals, residents, function(err) {
+			if (global.settings.logging) console.log("Done.");
 			if (err) {
 				callback(err);
 			} else {
 				// optimize found solution using 2-opt
+				if (global.settings.logging) process.stdout.write("[hospitals-and-residents] Optimizing matching... ");
 				two_opt.run(hospitals, residents, function() {
+					if (global.settings.logging) console.log("Done.");
 					callback();
 				});
 			}

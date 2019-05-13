@@ -11,8 +11,10 @@ function two_opt(hospitals, residents, callback) {
 	}
 
 	if (single) {
+		if (global.settings.logging) console.log("[hospitals-and-residents] Choosing single resident 2-opt");
 		singleResidentTwoOpt(hospitals, residents, callback);
 	} else {
+		if (global.settings.logging) console.log("[hospitals-and-residents] Choosing grouped resident 2-opt");
 		groupedResidentTwoOpt(hospitals, residents, callback);
 	}
 }
@@ -36,9 +38,9 @@ function getRandomIndices(num_residents) {
 function singleResidentTwoOpt(hospitals, residents, callback) {
 	addSingleGhosts(hospitals, residents);
 	var temperature = 100.0;
-	var rate = 0.9999;
+	var rate = global.settings.rate;
 
-	while (temperature > 0.00001) {
+	while (temperature > global.settings.threshold) {
 		var ind = getRandomIndices(residents.length);
 
 		// get random pairs
@@ -111,9 +113,9 @@ function removeSingleGhosts(hospitals, residents) {
 function groupedResidentTwoOpt(hospitals, residents, callback) {
 	addGroupedGhosts(hospitals, residents);
 	var temperature = 100.0;
-	var rate = 0.9999;
+	var rate = global.settings.rate;
 
-	while (temperature > 0.00001) {
+	while (temperature > global.settings.threshold) {
 		var ind = getRandomIndices(residents.length);
 
 		// get random pairs
